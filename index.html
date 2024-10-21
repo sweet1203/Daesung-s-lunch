@@ -91,6 +91,7 @@
             누적 방문자 수: <span id="totalVisitors">0</span> / 오늘 방문자 수: <span id="todayVisitors">0</span>
         </div>
     </div>
+
     <script>
         const lunchMenu = document.getElementById('lunchMenu');
         const dinnerMenu = document.getElementById('dinnerMenu');
@@ -106,20 +107,22 @@
 
         // 방문자 수 처리
         function updateVisitorCount() {
-            const today = new Date().toLocaleDateString();
-            let total = localStorage.getItem('totalVisitors') || 0;
+            const today = new Date().toISOString().split('T')[0]; // ISO 형식 날짜
+            let total = parseInt(localStorage.getItem('totalVisitors')) || 0;
             let lastVisit = localStorage.getItem('lastVisitDate');
-            let todayCount = localStorage.getItem('todayVisitors') || 0;
+            let todayCount = parseInt(localStorage.getItem('todayVisitors')) || 0;
 
-            // 날짜가 바뀌면 오늘 방문자 수를 초기화
+            // 날짜가 바뀌면 오늘 방문자 수 초기화
             if (lastVisit !== today) {
                 todayCount = 0;
                 localStorage.setItem('lastVisitDate', today);
             }
 
-            // 방문자 수 증가 및 저장
-            total = parseInt(total) + 1;
-            todayCount = parseInt(todayCount) + 1;
+            // 방문자 수 증가
+            total += 1;
+            todayCount += 1;
+
+            // 방문자 수 저장
             localStorage.setItem('totalVisitors', total);
             localStorage.setItem('todayVisitors', todayCount);
 
@@ -162,7 +165,7 @@
         async function updateMenu() {
             const selectedDate = datePicker.value;
             loadingIndicator.style.display = 'block';
-            
+
             try {
                 const menuData = await fetchMenuData(selectedDate);
                 if (menuData.length === 0) {
