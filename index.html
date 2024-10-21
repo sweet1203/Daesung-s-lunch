@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>대성여자고등학교 급식 메뉴</title>
     <style>
+        /* 전체 페이지 스타일 */
         body {
             font-family: 'Nanum Gothic', sans-serif;
-            background-color: #f5f5dc;
+            background-color: #fffaf0; /* 베이지 배경 */
             margin: 0;
             padding: 10px;
             display: flex;
@@ -15,6 +16,7 @@
             align-items: center;
             min-height: 100vh;
         }
+
         .container {
             background-color: white;
             border-radius: 15px;
@@ -23,40 +25,49 @@
             width: 100%;
             max-width: 380px;
         }
+
         h1 {
-            color: #5f5f5f;
+            color: #cc6699;
             text-align: center;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             margin-bottom: 10px;
         }
+
         .date-selector {
             text-align: center;
             margin-bottom: 20px;
         }
+
         input[type="date"] {
             width: 100%;
             padding: 12px;
-            border: 1px solid #ccc;
+            border: 1px solid #ffb6c1;
             border-radius: 10px;
             font-size: 1rem;
-            background-color: #fff;
+            background-color: #ffe4e1;
             color: #333;
+            -webkit-appearance: none;
+            appearance: none;
         }
+
         .menu {
             margin-bottom: 15px;
             padding: 15px;
-            background-color: #f0e5d8;
+            background-color: #ffe6e6;
             border-radius: 10px;
         }
+
         .menu h2 {
-            color: #8b7d7b;
-            margin-top: 0;
+            color: #ff99aa;
             font-size: 1.2rem;
+            margin-top: 0;
         }
+
         .menu-items {
             list-style-type: none;
             padding: 0;
         }
+
         .menu-items li {
             margin-bottom: 5px;
             padding: 8px;
@@ -64,29 +75,41 @@
             border-radius: 5px;
             font-size: 0.9rem;
         }
+
         .loading {
             text-align: center;
-            color: #8b7d7b;
+            color: #cc6699;
             font-weight: bold;
         }
+
         .visitor-counter {
             text-align: center;
             margin-top: 10px;
             font-size: 0.9rem;
-            color: #5f5f5f;
+            color: #cc6699;
+        }
+
+        /* 모바일 대응 스타일 */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.4rem;
+            }
+            .menu h2 {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🍽️ 대성여자고등학교</h1>
-        <h1>급식 메뉴 📅</h1>
+        <h1>🍓 대성여자고등학교</h1>
+        <h1>급식 메뉴 🍱</h1>
         <div class="date-selector">
             <input type="date" id="datePicker">
         </div>
-        <div id="loadingIndicator" class="loading" style="display: none;">로딩 중... 🕐</div>
+        <div id="loadingIndicator" class="loading" style="display: none;">로딩 중... ⏳</div>
         <div class="menu">
-            <h2>🍱 점심 메뉴</h2>
+            <h2>🍲 점심 메뉴</h2>
             <ul class="menu-items" id="lunchMenu"></ul>
         </div>
         <div class="menu">
@@ -94,7 +117,7 @@
             <ul class="menu-items" id="dinnerMenu"></ul>
         </div>
         <div class="visitor-counter">
-            누적 방문자 수: <span id="totalVisitors">0</span> / 오늘 방문자 수: <span id="todayVisitors">0</span> 👀
+            👩‍🎓 누적 방문자 수: <span id="totalVisitors">0</span> / 오늘 방문자 수: <span id="todayVisitors">0</span>
         </div>
     </div>
 
@@ -187,4 +210,11 @@
             loadingIndicator.style.display = 'none';
         }
 
-        datePicker.valueAsDate = new Date
+        datePicker.valueAsDate = new Date();
+        datePicker.addEventListener('change', updateMenu);
+
+        updateMenu();
+        updateVisitorCount();
+    </script>
+</body>
+</html>
