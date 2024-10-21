@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Nanum Gothic', sans-serif;
-            background-color: #f0f8ff;
+            background-color: #fff0f5; /* 연한 분홍색 배경 */
             margin: 0;
             padding: 20px;
             display: flex;
@@ -18,24 +18,24 @@
         .container {
             background-color: white;
             border-radius: 15px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
             max-width: 600px;
             width: 100%;
         }
         h1 {
-            color: #4a4a4a;
+            color: #cc6699; /* 분홍색 계열 텍스트 */
             text-align: center;
             margin-bottom: 20px;
         }
         .menu {
             margin-bottom: 20px;
             padding: 15px;
-            background-color: #e6f3ff;
+            background-color: #ffe6e6; /* 연한 분홍색 메뉴 배경 */
             border-radius: 10px;
         }
         .menu h2 {
-            color: #0066cc;
+            color: #ff99aa; /* 연한 분홍색 제목 */
             margin-top: 0;
         }
         .menu-items {
@@ -54,20 +54,20 @@
         }
         input[type="date"] {
             padding: 10px;
-            border: 1px solid #ddd;
+            border: 1px solid #ffcccc; /* 분홍색 테두리 */
             border-radius: 5px;
             font-size: 16px;
         }
         .loading {
             text-align: center;
-            color: #0066cc;
+            color: #cc6699; /* 분홍색 로딩 텍스트 */
             font-weight: bold;
         }
         .visitor-counter {
             text-align: center;
             margin-top: 10px;
             font-size: 18px;
-            color: #333;
+            color: #cc6699; /* 분홍색 방문자 수 텍스트 */
         }
     </style>
 </head>
@@ -100,38 +100,36 @@
         const totalVisitors = document.getElementById('totalVisitors');
         const todayVisitors = document.getElementById('todayVisitors');
 
-        // NEIS API 정보
         const API_KEY = '92fde5e6854340a681f0c632a35cac3b';
-        const ATPT_OFCDC_SC_CODE = 'F10'; // 광주광역시 교육청
-        const SD_SCHUL_CODE = '7380063'; // 대성여자고등학교 (광주)
+        const ATPT_OFCDC_SC_CODE = 'F10'; 
+        const SD_SCHUL_CODE = '7380063'; 
 
-        // 방문자 수 처리
         function updateVisitorCount() {
-            const today = new Date().toISOString().split('T')[0]; // ISO 형식 날짜
+            const today = new Date().toISOString().split('T')[0];
             let total = parseInt(localStorage.getItem('totalVisitors')) || 0;
             let lastVisit = localStorage.getItem('lastVisitDate');
             let todayCount = parseInt(localStorage.getItem('todayVisitors')) || 0;
 
-            // 날짜가 바뀌면 오늘 방문자 수 초기화
             if (lastVisit !== today) {
                 todayCount = 0;
                 localStorage.setItem('lastVisitDate', today);
             }
 
-            // 방문자 수 증가
             total += 1;
             todayCount += 1;
 
-            // 방문자 수 저장
             localStorage.setItem('totalVisitors', total);
             localStorage.setItem('todayVisitors', todayCount);
 
-            // 화면에 반영
             totalVisitors.textContent = total;
             todayVisitors.textContent = todayCount;
         }
 
-        // 급식 메뉴 가져오기
+        function formatDateToYYMMDD(date) {
+            const [year, month, day] = date.split('-');
+            return `${year.slice(2)}-${month}-${day}`;
+        }
+
         async function fetchMenuData(date) {
             const formattedDate = date.replace(/-/g, '');
             const url = `https://open.neis.go.kr/hub/mealServiceDietInfo` +
@@ -156,14 +154,14 @@
 
                 menuItems.forEach(item => {
                     const li = document.createElement('li');
-                    li.textContent = item.replace(/\([^)]*\)/g, '').trim(); // 알레르기 정보 제거
+                    li.textContent = item.replace(/\([^)]*\)/g, '').trim();
                     menuList.appendChild(li);
                 });
             });
         }
 
         async function updateMenu() {
-            const selectedDate = datePicker.value;
+            const selectedDate = formatDateToYYMMDD(datePicker.value);
             loadingIndicator.style.display = 'block';
 
             try {
@@ -183,11 +181,9 @@
             }
         }
 
-        // 초기 설정 및 이벤트 리스너 추가
         datePicker.valueAsDate = new Date();
         datePicker.addEventListener('change', updateMenu);
 
-        // 초기 메뉴 및 방문자 수 로드
         updateMenu();
         updateVisitorCount();
     </script>
