@@ -8,7 +8,7 @@
         /* 전체 페이지 스타일 */
         body {
             font-family: 'Nanum Gothic', sans-serif;
-            background-color: #fff0f5; /* 연한 분홍색 배경 */
+            background-color: #f5f5dc; /* 베이지 배경 */
             margin: 0;
             padding: 10px;
             display: flex;
@@ -17,34 +17,62 @@
             min-height: 100vh;
         }
 
-        /* 컨테이너 박스 */
+        /* 컨테이너 */
         .container {
             background-color: white;
             border-radius: 15px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
             width: 100%;
-            max-width: 400px;
+            max-width: 380px;
         }
 
         /* 제목 스타일 */
         h1 {
-            color: #cc6699;
+            color: #5f5f5f; /* 다크 그레이 */
             text-align: center;
-            font-size: 1.5rem;
-            margin-bottom: 15px;
+            font-size: 1.6rem;
+            margin-bottom: 10px;
         }
 
-        /* 메뉴 블록 */
+        /* 날짜 선택 필드 */
+        .date-selector {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        input[type="date"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 1rem;
+            background-color: #fff;
+            color: #333;
+            appearance: none; /* 기본 브라우저 스타일 제거 */
+            -webkit-appearance: none;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+        }
+
+        .emoji {
+            font-size: 2rem;
+            margin: 5px;
+        }
+
+        /* 메뉴 카드 스타일 */
         .menu {
             margin-bottom: 15px;
-            padding: 10px;
-            background-color: #ffe6e6;
+            padding: 15px;
+            background-color: #f0e5d8; /* 연한 베이지 */
             border-radius: 10px;
         }
 
         .menu h2 {
-            color: #ff99aa;
+            color: #8b7d7b; /* 회색 빛 텍스트 */
             margin-top: 0;
             font-size: 1.2rem;
         }
@@ -56,30 +84,16 @@
 
         .menu-items li {
             margin-bottom: 5px;
-            padding: 5px;
-            background-color: #ffffff;
+            padding: 8px;
+            background-color: #fff;
             border-radius: 5px;
             font-size: 0.9rem;
-        }
-
-        /* 날짜 선택기 */
-        .date-selector {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        input[type="date"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ffcccc;
-            border-radius: 5px;
-            font-size: 1rem;
         }
 
         /* 로딩 표시 */
         .loading {
             text-align: center;
-            color: #cc6699;
+            color: #8b7d7b;
             font-weight: bold;
         }
 
@@ -88,25 +102,25 @@
             text-align: center;
             margin-top: 10px;
             font-size: 0.9rem;
-            color: #cc6699;
+            color: #5f5f5f;
         }
 
-        /* 반응형 처리: 모바일 화면 최적화 */
+        /* 미디어 쿼리: 모바일 대응 */
         @media (max-width: 480px) {
             h1 {
-                font-size: 1.3rem;
+                font-size: 1.4rem;
             }
 
             .menu h2 {
                 font-size: 1rem;
             }
 
-            input[type="date"] {
-                font-size: 0.9rem;
-            }
-
             .menu-items li {
                 font-size: 0.85rem;
+            }
+
+            input[type="date"] {
+                font-size: 0.9rem;
             }
 
             .visitor-counter {
@@ -117,22 +131,22 @@
 </head>
 <body>
     <div class="container">
-        <h1>대성여자고등학교</h1>
-        <h1>급식 메뉴</h1>
+        <h1>🍽️ 대성여자고등학교</h1>
+        <h1>급식 메뉴 📅</h1>
         <div class="date-selector">
             <input type="date" id="datePicker">
         </div>
-        <div id="loadingIndicator" class="loading" style="display: none;">로딩 중...</div>
+        <div id="loadingIndicator" class="loading" style="display: none;">로딩 중... 🕐</div>
         <div class="menu">
-            <h2>점심 메뉴</h2>
+            <h2>🍱 점심 메뉴</h2>
             <ul class="menu-items" id="lunchMenu"></ul>
         </div>
         <div class="menu">
-            <h2>석식 메뉴</h2>
+            <h2>🍛 석식 메뉴</h2>
             <ul class="menu-items" id="dinnerMenu"></ul>
         </div>
         <div class="visitor-counter">
-            누적 방문자 수: <span id="totalVisitors">0</span> / 오늘 방문자 수: <span id="todayVisitors">0</span>
+            누적 방문자 수: <span id="totalVisitors">0</span> / 오늘 방문자 수: <span id="todayVisitors">0</span> 👀
         </div>
     </div>
 
@@ -174,62 +188,4 @@
             return `${year.slice(2)}-${month}-${day}`;
         }
 
-        async function fetchMenuData(date) {
-            const formattedDate = date.replace(/-/g, '');
-            const url = `https://open.neis.go.kr/hub/mealServiceDietInfo` +
-                        `?KEY=${API_KEY}` +
-                        `&Type=json` +
-                        `&ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}` +
-                        `&SD_SCHUL_CODE=${SD_SCHUL_CODE}` +
-                        `&MLSV_YMD=${formattedDate}`;
-
-            const response = await fetch(url);
-            const data = await response.json();
-            return data.mealServiceDietInfo[1].row;
-        }
-
-        function displayMenu(menuData) {
-            lunchMenu.innerHTML = '';
-            dinnerMenu.innerHTML = '';
-
-            menuData.forEach(meal => {
-                const menuItems = meal.DDISH_NM.split('<br/>');
-                const menuList = meal.MMEAL_SC_NM === '중식' ? lunchMenu : dinnerMenu;
-
-                menuItems.forEach(item => {
-                    const li = document.createElement('li');
-                    li.textContent = item.replace(/\([^)]*\)/g, '').trim();
-                    menuList.appendChild(li);
-                });
-            });
-        }
-
-        async function updateMenu() {
-            const selectedDate = formatDateToYYMMDD(datePicker.value);
-            loadingIndicator.style.display = 'block';
-
-            try {
-                const menuData = await fetchMenuData(selectedDate);
-                if (menuData.length === 0) {
-                    lunchMenu.innerHTML = '<li>해당 날짜의 중식 메뉴가 없습니다.</li>';
-                    dinnerMenu.innerHTML = '<li>해당 날짜의 석식 메뉴가 없습니다.</li>';
-                } else {
-                    displayMenu(menuData);
-                }
-            } catch (error) {
-                console.error('Error fetching menu:', error);
-                lunchMenu.innerHTML = '<li>메뉴를 불러오는 데 실패했습니다.</li>';
-                dinnerMenu.innerHTML = '<li>메뉴를 불러오는 데 실패했습니다.</li>';
-            } finally {
-                loadingIndicator.style.display = 'none';
-            }
-        }
-
-        datePicker.valueAsDate = new Date();
-        datePicker.addEventListener('change', updateMenu);
-
-        updateMenu();
-        updateVisitorCount();
-    </script>
-</body>
-</html>
+        
