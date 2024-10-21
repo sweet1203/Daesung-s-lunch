@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>대성여자고등학교 급식 메뉴</title>
     <style>
-        /* 전체 페이지 스타일 */
         body {
             font-family: 'Nanum Gothic', sans-serif;
             background-color: #fffaf0; /* 베이지 배경 */
@@ -22,79 +21,93 @@
             border-radius: 15px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            width: 100%; /* 부모 요소에 맞게 너비 100% */
-            max-width: 380px; /* 고정된 최대 너비 */
+            width: 100%;
+            max-width: 380px;
+            box-sizing: border-box;
         }
 
         h1 {
             color: #cc6699;
             text-align: center;
-            font-size: 1.5rem; /* 제목의 글자 크기 */
+            font-size: 1.5rem;
             margin-bottom: 10px;
         }
 
-        /* 날짜 선택기와 메뉴의 통일된 스타일 */
         .date-selector {
             text-align: center;
             margin-bottom: 20px;
         }
-	input[type="date"] {
-        	width: 180px; /* 날짜 형식에 맞춘 최소화된 너비 */
-	        padding: 8px;
-        	border: 1px solid #ffb6c1;
-	        border-radius: 10px;
-        	font-size: 1rem;
-	        background-color: #ffe4e1;
-	        color: #333;
-        	text-align: center;
-               }
+
+        input[type="date"] {
+            width: 180px; /* 최소화된 날짜 선택기 너비 */
+            padding: 8px;
+            border: 1px solid #ffb6c1;
+            border-radius: 10px;
+            font-size: 1rem;
+            background-color: #ffe4e1;
+            color: #333;
+            text-align: center;
+        }
 
         .menu {
-            margin-bottom: 15px; /* 메뉴 간 여백 */
-            padding: 15px; /* 내부 여백 */
-            background-color: #ffe6e6; /* 메뉴 배경색 */
-            border-radius: 10px; /* 메뉴의 둥근 모서리 */
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #ffe6e6;
+            border-radius: 10px;
         }
 
         .menu h2 {
             color: #ff99aa;
-            font-size: 1.2rem; /* 메뉴 제목 크기 */
+            font-size: 1.2rem;
             margin-top: 0;
         }
 
         .menu-items {
             list-style-type: none;
-            padding: 0; /* 기본 여백 제거 */
+            padding: 0;
         }
 
         .menu-items li {
-            margin-bottom: 5px; /* 항목 간 간격 */
-            padding: 8px; /* 항목 내부 여백 */
-            background-color: #fff; /* 항목 배경색 */
-            border-radius: 5px; /* 항목 둥근 모서리 */
-            font-size: 0.9rem; /* 항목 글자 크기 */
+            margin-bottom: 5px;
+            padding: 8px;
+            background-color: #fff;
+            border-radius: 5px;
+            font-size: 0.9rem;
         }
 
         .loading {
             text-align: center;
             color: #cc6699;
-            font-weight: bold; /* 로딩 중 텍스트 강조 */
+            font-weight: bold;
         }
 
         .visitor-counter {
             text-align: center;
             margin-top: 10px;
-            font-size: 0.9rem; /* 방문자 수 글자 크기 */
+            font-size: 0.9rem;
             color: #cc6699;
+        }
+
+        /* 주의 문구 스타일 */
+        .notice {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #666;
+            text-align: center;
+        }
+
+        .notice a {
+            color: #cc6699;
+            text-decoration: none;
         }
 
         /* 모바일 대응 스타일 */
         @media (max-width: 480px) {
             h1 {
-                font-size: 1.4rem; /* 모바일에서 제목 크기 조정 */
+                font-size: 1.4rem;
             }
             .menu h2 {
-                font-size: 1rem; /* 모바일에서 메뉴 제목 크기 조정 */
+                font-size: 1rem;
             }
         }
     </style>
@@ -128,8 +141,8 @@
         <div class="visitor-counter">
             👩‍🎓 누적 방문자 수: <span id="totalVisitors">0</span> / 오늘 방문자 수: <span id="todayVisitors">0</span>
         </div>
-	    <BR><BR>
-	      <!-- 주의 문구 -->
+
+        <!-- 주의 문구 -->
         <div class="notice">
             식단에 관한 자세한 정보는 <a href="http://daesung.gen.hs.kr/xboard/board.php?tbnum=45" target="_blank">학교홈피</a>를 참고하세요.
         </div>
@@ -170,8 +183,7 @@
 
         async function fetchMenuData(date) {
             const formattedDate = date.replace(/-/g, '');
-            const url = `https://open.neis.go.kr/hub/mealServiceDietInfo` +
-                        `?KEY=${API_KEY}&Type=json&ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&MLSV_YMD=${formattedDate}`;
+            const url = `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=${API_KEY}&Type=json&ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&MLSV_YMD=${formattedDate}`;
 
             try {
                 const response = await fetch(url);
