@@ -23,19 +23,53 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
             width: 100%;
-            max-width: 380px;
+            max-width: 400px; /* 통일된 크기 */
+            box-sizing: border-box;
         }
 
         h1 {
             color: #cc6699;
             text-align: center;
             font-size: 1.5rem;
-            margin-bottom: 10px;
+            margin: 10px 0;
         }
 
+        /* 메뉴 블록 */
+        .menu {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #ffe6e6;
+            border-radius: 10px;
+            height: 150px; /* 고정된 높이 */
+            box-sizing: border-box;
+        }
+
+        .menu h2 {
+            color: #ff99aa;
+            font-size: 1.2rem;
+            margin-top: 0;
+        }
+
+        .menu-items {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            height: 100px;
+            overflow-y: auto; /* 스크롤 가능 */
+        }
+
+        .menu-items li {
+            margin-bottom: 5px;
+            padding: 8px;
+            background-color: #fff;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        /* 날짜 선택기 */
         .date-selector {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         input[type="date"] {
@@ -50,38 +84,14 @@
             appearance: none;
         }
 
-        .menu {
-            margin-bottom: 15px;
-            padding: 15px;
-            background-color: #ffe6e6;
-            border-radius: 10px;
-        }
-
-        .menu h2 {
-            color: #ff99aa;
-            font-size: 1.2rem;
-            margin-top: 0;
-        }
-
-        .menu-items {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .menu-items li {
-            margin-bottom: 5px;
-            padding: 8px;
-            background-color: #fff;
-            border-radius: 5px;
-            font-size: 0.9rem;
-        }
-
+        /* 로딩 표시 */
         .loading {
             text-align: center;
             color: #cc6699;
             font-weight: bold;
         }
 
+        /* 방문자 수 */
         .visitor-counter {
             text-align: center;
             margin-top: 10px;
@@ -102,8 +112,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>🍓 대성여자고등학교</h1>
-        <h1>급식 메뉴 🍱</h1>
+        <h1>💖 대성여자고등학교 급식 메뉴 💖</h1>
         <div class="date-selector">
             <input type="date" id="datePicker">
         </div>
@@ -156,12 +165,7 @@
 
         async function fetchMenuData(date) {
             const formattedDate = date.replace(/-/g, '');
-            const url = `https://open.neis.go.kr/hub/mealServiceDietInfo` +
-                        `?KEY=${API_KEY}` +
-                        `&Type=json` +
-                        `&ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}` +
-                        `&SD_SCHUL_CODE=${SD_SCHUL_CODE}` +
-                        `&MLSV_YMD=${formattedDate}`;
+            const url = `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=${API_KEY}&Type=json&ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&MLSV_YMD=${formattedDate}`;
 
             try {
                 const response = await fetch(url);
