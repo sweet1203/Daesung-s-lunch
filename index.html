@@ -137,11 +137,17 @@
             <ul class="menu-items" id="dinnerMenu"></ul>
         </div>
 
-        <!-- 방문자 카운터 -->
+        <!-- 방문자 카운터 (FreeCounter API) -->
         <div class="visitor-counter">
-            👩‍🎓 누적 방문자 수: <span id="totalVisitors">0</span> / 오늘 방문자 수: <span id="todayVisitors">0</span>
+            👩‍🎓 누적 방문자 수: 
+            <div id="sfc7t46bl1bzq6fbt4z7zulrr38ypleusjb"></div>
+            <script type="text/javascript" src="https://counter6.optistats.ovh/private/counter.js?c=7t46bl1bzq6fbt4z7zulrr38ypleusjb&down=async" async></script>
+            <noscript>
+                <a href="https://www.freecounterstat.com" title="free website counter">
+                    <img src="https://counter6.optistats.ovh/private/freecounterstat.php?c=7t46bl1bzq6fbt4z7zulrr38ypleusjb" border="0" title="free website counter" alt="free website counter">
+                </a>
+            </noscript>
         </div>
-        <br>
 
         <!-- 주의 문구 -->
         <div class="notice">
@@ -154,33 +160,10 @@
         const dinnerMenu = document.getElementById('dinnerMenu');
         const datePicker = document.getElementById('datePicker');
         const loadingIndicator = document.getElementById('loadingIndicator');
-        const totalVisitors = document.getElementById('totalVisitors');
-        const todayVisitors = document.getElementById('todayVisitors');
 
         const API_KEY = '92fde5e6854340a681f0c632a35cac3b';
         const ATPT_OFCDC_SC_CODE = 'F10';
         const SD_SCHUL_CODE = '7380063';
-
-        function updateVisitorCount() {
-            const today = new Date().toISOString().split('T')[0];
-            let total = parseInt(localStorage.getItem('totalVisitors')) || 0;
-            let lastVisit = localStorage.getItem('lastVisitDate');
-            let todayCount = parseInt(localStorage.getItem('todayVisitors')) || 0;
-
-            if (lastVisit !== today) {
-                todayCount = 0;
-                localStorage.setItem('lastVisitDate', today);
-            }
-
-            total += 1;
-            todayCount += 1;
-
-            localStorage.setItem('totalVisitors', total);
-            localStorage.setItem('todayVisitors', todayCount);
-
-            totalVisitors.textContent = total;
-            todayVisitors.textContent = todayCount;
-        }
 
         async function fetchMenuData(date) {
             const formattedDate = date.replace(/-/g, '');
@@ -237,7 +220,6 @@
         datePicker.addEventListener('change', updateMenu);
 
         updateMenu();
-        updateVisitorCount();
     </script>
 </body>
 </html>
