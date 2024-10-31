@@ -33,6 +33,14 @@
             margin-bottom: 10px;
         }
 
+        .visitor-counter {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #cc6699;
+        }
+        
+
         .date-selector {
             text-align: center;
             margin-bottom: 20px;
@@ -139,15 +147,26 @@
 
         <!-- 방문자 카운터 (FreeCounter API) -->
         <div class="visitor-counter">
-            👩‍🎓누적 방문자 수 
-            <div id="sfc7t46bl1bzq6fbt4z7zulrr38ypleusjb"></div>
-            <script type="text/javascript" src="https://counter6.optistats.ovh/private/counter.js?c=7t46bl1bzq6fbt4z7zulrr38ypleusjb&down=async" async></script>
-            <noscript>
-                <a href="https://www.freecounterstat.com" title="free website counter">
-                    <img src="https://counter6.optistats.ovh/private/freecounterstat.php?c=7t46bl1bzq6fbt4z7zulrr38ypleusjb" border="0" title="free website counter" alt="free website counter">
-                </a>
-            </noscript>
+            👩‍🎓누적 방문자 수 :  <span id="visitCount">0</span>
+           
         </div>
+        <script>
+            // 방문 횟수를 localStorage에서 가져오기
+            let visitCount = localStorage.getItem('visitCount');
+
+            // 방문 횟수가 없으면 250으로 초기화, 있으면 1씩 증가
+            if (visitCount === null) {
+                visitCount = 250; // 초기값 설정
+            } else {
+                visitCount = parseInt(visitCount) + 1;
+            }
+
+            // 방문 횟수를 localStorage에 저장
+            localStorage.setItem('visitCount', visitCount);
+
+            // HTML에 방문 횟수를 표시
+            document.getElementById('visitCount').textContent = visitCount;
+        </script>
 
         <!-- 주의 문구 -->
         <div class="notice">
