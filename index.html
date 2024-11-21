@@ -5,222 +5,225 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>대성여자고등학교 급식 메뉴</title>
 <style>
-body {
-font-family: 'Nanum Gothic', sans-serif;
-background-color: #fffaf0; /* 베이지 배경 */
-margin: 0;
-padding: 10px;
-display: flex;
-justify-content: center;
-align-items: center;
-min-height: 100vh; /* 화면 전체 높이 확보 */
-}
+  body {
+    font-family: 'Nanum Gothic', sans-serif;
+    background-color: #fffaf0; /* 베이지 배경 */
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* 화면 전체 높이 확보 */
+  }
 
-.container {
-background-color: white;
-border-radius: 15px;
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-padding: 20px;
-width: 100%;
-max-width: 380px;
-box-sizing: border-box;
-}
+  .container {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 380px;
+    box-sizing: border-box;
+  }
 
-h1 {
-color: #cc6699;
-text-align: center;
-font-size: 1.5rem;
-margin-bottom: 10px;
-}
+  h1 {
+    color: #cc6699;
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
 
-.date-selector {
-text-align: center;
-margin-bottom: 20px;
-}
+  .date-selector {
+    text-align: center;
+    margin-bottom: 20px;
+  }
 
-input[type="date"] {
-width: 180px; /* 최소화된 날짜 선택기 너비 */
-padding: 8px;
-border: 1px solid #ffb6c1;
-border-radius: 10px;
-font-size: 1rem;
-background-color: #ffe4e1;
-color: #333;
-text-align: center;
-}
+  input[type="date"] {
+    width: 180px; /* 최소화된 날짜 선택기 너비 */
+    padding: 8px;
+    border: 1px solid #ffb6c1;
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: #ffe4e1;
+    color: #333;
+    text-align: center;
+  }
 
-.menu {
-margin-bottom: 15px;
-padding: 15px;
-background-color: #ffe6e6;
-border-radius: 10px;
-}
+  .menu {
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: #ffe6e6;
+    border-radius: 10px;
+  }
 
-.menu h2 {
-color: #ff99aa;
-font-size: 1.2rem;
-margin-top: 0;
-}
+  .menu h2 {
+    color: #ff99aa;
+    font-size: 1.2rem;
+    margin-top: 0;
+  }
 
-.menu-items {
-list-style-type: none;
-padding: 0;
-}
+  .menu-items {
+    list-style-type: none;
+    padding: 0;
+  }
 
-.menu-items li {
-margin-bottom: 5px;
-padding: 8px;
-background-color: #fff;
-border-radius: 5px;
-font-size: 0.9rem;
-}
+  .menu-items li {
+    margin-bottom: 5px;
+    padding: 8px;
+    background-color: #fff;
+    border-radius: 5px;
+    font-size: 0.9rem;
+  }
 
-.loading {
-text-align: center;
-color: #cc6699;
-font-weight: bold;
-}
+  .loading {
+    text-align: center;
+    color: #cc6699;
+    font-weight: bold;
+  }
 
-.visitor-counter {
-text-align: center;
-margin-top: 10px;
-font-size: 0.9rem;
-color: #cc6699;
-}
+  .visitor-counter {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #cc6699;
+  }
 
-/* 주의 문구 스타일 */
-.notice {
-margin-top: 10px;
-font-size: 0.8rem;
-color: #666;
-text-align: center;
-}
+  .notice {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: #666;
+    text-align: center;
+  }
 
-.notice a {
-color: #cc6699;
-text-decoration: none;
-}
+  .notice a {
+    color: #cc6699;
+    text-decoration: none;
+  }
 
-/* 모바일 대응 스타일 */
-@media (max-width: 480px) {
-h1 {
-font-size: 1.4rem;
-}
-.menu h2 {
-font-size: 1rem;
-}
-}
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 1.4rem;
+    }
+
+    .menu h2 {
+      font-size: 1rem;
+    }
+  }
 </style>
 </head>
 <body>
 <div class="container">
-<h1>🩷대성여자고등학교🩷</h1>
-<h1>🍴급식 메뉴🍚</h1>
+  <h1>🩷대성여자고등학교🩷</h1>
+  <h1>🍴급식 메뉴🍚</h1>
 
-<!-- 날짜 선택 필드 -->
-<div class="date-selector">
-<input type="date" id="datePicker">
+  <!-- 날짜 선택 필드 -->
+  <div class="date-selector">
+    <input type="date" id="datePicker">
+  </div>
+
+  <!-- 로딩 인디케이터 -->
+  <div id="loadingIndicator" class="loading" style="display: none;">로딩 중... ⏳</div>
+
+  <!-- 점심 메뉴 -->
+  <div class="menu">
+    <h2>🔅점심 메뉴</h2>
+    <ul class="menu-items" id="lunchMenu"></ul>
+  </div>
+
+  <!-- 석식 메뉴 -->
+  <div class="menu">
+    <h2>🌛석식 메뉴</h2>
+    <ul class="menu-items" id="dinnerMenu"></ul>
+  </div>
+
+  <!-- 방문자 카운터 -->
+  <div class="visitor-counter">
+    👩‍🎓 누적 방문자 수:
+    <div id="sfcngff3pgx6p5key1yamz9deppabaramxh"></div>
+    <script type="text/javascript" src="https://counter6.optistats.ovh/private/counter.js?c=ngff3pgx6p5key1yamz9deppabaramxh&down=async" async></script>
+    <noscript>
+      <a href="https://www.freecounterstat.com" title="web counter">
+        <img src="https://counter6.optistats.ovh/private/freecounterstat.php?c=ngff3pgx6p5key1yamz9deppabaramxh" border="0" title="web counter" alt="web counter">
+      </a>
+    </noscript>
+  </div>
+
+  <!-- 주의 문구 -->
+  <div class="notice">
+    식단에 관한 자세한 정보는 
+    <a href="http://daesung.gen.hs.kr/xboard/board.php?tbnum=45" target="_blank">학교홈피</a>를 참고하세요.
+  </div>
+  <p style="text-align: center; font-size: 0.8rem; color: gray; margin-top: 15px;">- 대성여고 정보샘 제작 -</p>
 </div>
-
-<!-- 로딩 인디케이터 -->
-<div id="loadingIndicator" class="loading" style="display: none;">로딩 중... ⏳</div>
-
-<!-- 점심 메뉴 -->
-<div class="menu">
-<h2>🔅점심 메뉴</h2>
-<ul class="menu-items" id="lunchMenu"></ul>
-</div>
-
-<!-- 석식 메뉴 -->
-<div class="menu">
-<h2>🌛석식 메뉴</h2>
-<ul class="menu-items" id="dinnerMenu"></ul>
-</div>
-
-<!-- 방문자 카운터 (FreeCounter API) -->
-<div class="visitor-counter">
-            👩‍🎓 누적 방문자 수: 
-<div id="sfcngff3pgx6p5key1yamz9deppabaramxh"></div>
-<script type="text/javascript" src="https://counter6.optistats.ovh/private/counter.js?c=ngff3pgx6p5key1yamz9deppabaramxh&down=async" async></script>
-<noscript><a href="https://www.freecounterstat.com" title="web counter"><img src="https://counter6.optistats.ovh/private/freecounterstat.php?c=ngff3pgx6p5key1yamz9deppabaramxh" border="0" title="web counter" alt="web counter"></a></noscript>
-
-</div>
-
-<!-- 주의 문구 -->
-<div class="notice">
-식단에 관한 자세한 정보는 <a href="http://daesung.gen.hs.kr/xboard/board.php?tbnum=45" target="_blank">학교홈피</a>를 참고하세요.
-            
-</div>
-<!-- 제작자 표시 -->
-<p style="text-align: center; font-size: 0.8rem; color: gray; margin-top: 15px;">- 대성여고 정보샘 제작 -</p>
-</div>
-
 
 <script>
-const lunchMenu = document.getElementById('lunchMenu');
-const dinnerMenu = document.getElementById('dinnerMenu');
-const datePicker = document.getElementById('datePicker');
-const loadingIndicator = document.getElementById('loadingIndicator');
+  const lunchMenu = document.getElementById('lunchMenu');
+  const dinnerMenu = document.getElementById('dinnerMenu');
+  const datePicker = document.getElementById('datePicker');
+  const loadingIndicator = document.getElementById('loadingIndicator');
 
-const API_KEY = '92fde5e6854340a681f0c632a35cac3b';
-const ATPT_OFCDC_SC_CODE = 'F10';
-const SD_SCHUL_CODE = '7380063';
+  const API_KEY = '92fde5e6854340a681f0c632a35cac3b';
+  const ATPT_OFCDC_SC_CODE = 'F10';
+  const SD_SCHUL_CODE = '7380063';
 
-async function fetchMenuData(date) {
-const formattedDate = date.replace(/-/g, '');
-const url = `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=${API_KEY}&Type=json&ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&MLSV_YMD=${formattedDate}`;
+  async function fetchMenuData(date) {
+    const formattedDate = date.replace(/-/g, '');
+    const url = `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=${API_KEY}&Type=json&ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&MLSV_YMD=${formattedDate}`;
 
-try {
-const response = await fetch(url);
-const data = await response.json();
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
 
-if (data.mealServiceDietInfo) {
-return data.mealServiceDietInfo[1].row;
-} else {
-throw new Error('급식 정보가 없습니다.');
-}
-} catch (error) {
-console.error('Error fetching menu:', error);
-return [];
-}
-}
+      if (data.mealServiceDietInfo) {
+        return data.mealServiceDietInfo[1].row;
+      } else {
+        throw new Error('급식 정보가 없습니다.');
+      }
+    } catch (error) {
+      console.error('Error fetching menu:', error);
+      return [];
+    }
+  }
 
-function displayMenu(menuData) {
-lunchMenu.innerHTML = '';
-dinnerMenu.innerHTML = '';
+  function displayMenu(menuData) {
+    lunchMenu.innerHTML = '';
+    dinnerMenu.innerHTML = '';
 
-if (menuData.length === 0) {
-lunchMenu.innerHTML = '<li>해당 날짜의 중식 메뉴가 없습니다.</li>';
-dinnerMenu.innerHTML = '<li>해당 날짜의 석식 메뉴가 없습니다.</li>';
-return;
-}
+    if (menuData.length === 0) {
+      lunchMenu.innerHTML = '<li>해당 날짜의 중식 메뉴가 없습니다.</li>';
+      dinnerMenu.innerHTML = '<li>해당 날짜의 석식 메뉴가 없습니다.</li>';
+      return;
+    }
 
-menuData.forEach(meal => {
-const menuItems = meal.DDISH_NM.split('<br/>');
-const menuList = meal.MMEAL_SC_NM === '중식' ? lunchMenu : dinnerMenu;
+    menuData.forEach(meal => {
+      const menuItems = meal.DDISH_NM.split('<br/>');
+      const menuList = meal.MMEAL_SC_NM === '중식' ? lunchMenu : dinnerMenu;
 
-menuItems.forEach(item => {
-const li = document.createElement('li');
-li.textContent = item.replace(/\([^)]*\)/g, '').trim();
-menuList.appendChild(li);
-});
-});
-}
+      menuItems.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item.replace(/\([^)]*\)/g, '').trim();
+        menuList.appendChild(li);
+      });
+    });
+  }
 
-async function updateMenu() {
-const selectedDate = datePicker.value;
-loadingIndicator.style.display = 'block';
+  async function updateMenu() {
+    const selectedDate = datePicker.value;
+    loadingIndicator.style.display = 'block';
 
-const menuData = await fetchMenuData(selectedDate);
-displayMenu(menuData);
+    const menuData = await fetchMenuData(selectedDate);
+    displayMenu(menuData);
 
-loadingIndicator.style.display = 'none';
-}
+    loadingIndicator.style.display = 'none';
+  }
 
-datePicker.valueAsDate = new Date();
-datePicker.addEventListener('change', updateMenu);
+  document.addEventListener('DOMContentLoaded', () => {
+    const today = new Date();
+    datePicker.valueAsDate = today; // 오늘 날짜로 설정
+    updateMenu(); // 기본 메뉴 업데이트
+  });
 
-updateMenu();
+  datePicker.addEventListener('change', updateMenu);
 </script>
 </body>
 </html>
